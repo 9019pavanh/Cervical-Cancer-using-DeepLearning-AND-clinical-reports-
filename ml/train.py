@@ -64,13 +64,18 @@ def train(args):
         if stored.get('signature') == signature:
             features = stored['features']
         else:
-            pieces = []
-            loader = DataLoader(Images(rows), batch_size=args.batch_size, num_workers=0)
+            progress_cache = output/f'{architecture}-features.partial.pt'
+            partial = torch.load(progress_cache,map_location='cpu',weights_only=True) if progress_cache.exists() else {}
+            pieces = [partial['features']] if partial.get('signature') == signature else []
+            completed = len(pieces[0]) if pieces else 0
+            loader = DataLoader(Images(rows[completed:]), batch_size=args.batch_size, num_workers=args.workers)
             with torch.no_grad():
                 for step, (images, _) in enumerate(loader):
                     pieces.append(model.backbone(images.to(device)).cpu())
                     if step % 10 == 0:
-                        print(f'{architecture}: features {min((step+1)*args.batch_size,len(rows))}/{len(rows)}', flush=True)
+                        print(f'{architecture}: features {min(completed+(step+1)*args.batch_size,len(rows))}/{len(rows)}', flush=True)
+                    if (step+1) % 50 == 0:
+                        torch.save({'signature':signature,'features':torch.cat(pieces)},progress_cache)
             features = torch.cat(pieces)
             torch.save({'signature': signature, 'features': features}, cache)
         metrics, available = {}, []
@@ -115,8 +120,10 @@ def train(args):
             'status':'pilot' if args.max_per_class else 'research','max_per_class_per_split':args.max_per_class,
             'training':'ImageNet frozen backbone + trained task-specific linear heads', 'seed':args.seed,
             'elapsed_seconds':time.time()-started,'clinical_validation':False,'risk_model':False}
-        torch.save({'state_dict':model.cpu().state_dict(),'metadata':metadata},output/f'{architecture}.pt')
-        (output/f'{architecture}-metrics.json').write_text(json.dumps({'metadata':metadata,'metrics':metrics},indent=2),encoding='utf-8')
+        checkpoint_path=output/f'{architecture}.pt'
+        torch.save({'state_dict':model.cpu().state_dict(),'metadata':metadata},checkpoint_path)
+        (output/f'{architecture}-metrics.json').write_text(json.dumps({'metadata':metadata,'metrics':metrics,
+            'checkpoint_sha256':hashlib.sha256(checkpoint_path.read_bytes()).hexdigest()},indent=2),encoding='utf-8')
         print(f'Saved {architecture}: {time.time()-started:.1f}s',flush=True)
 
 
@@ -128,7 +135,8 @@ if __name__ == '__main__':
     parser.add_argument('--epochs',type=int,default=100)
     parser.add_argument('--lr',type=float,default=.003)
     parser.add_argument('--batch-size',type=int,default=16)
-    parser.add_argument('--threads',type=int,default=4)
+    parser.add_argument('--threads',type=int,default=8)
+    parser.add_argument('--workers',type=int,default=2)
     parser.add_argument('--seed',type=int,default=42)
     parser.add_argument('--max-per-class',type=int,default=0)
     args=parser.parse_args()

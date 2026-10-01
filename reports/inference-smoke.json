@@ -1,0 +1,34 @@
+[
+  {
+    "task": "bethesda",
+    "reference_label": "HSIL",
+    "predicted_label": "ASCUS",
+    "model_score": 0.2407340258359909,
+    "latency_ms": 719,
+    "status_code": 200
+  },
+  {
+    "task": "sipakmed",
+    "reference_label": "Dyskeratotic",
+    "predicted_label": "Dyskeratotic",
+    "model_score": 0.9957055449485779,
+    "latency_ms": 611,
+    "status_code": 200
+  },
+  {
+    "task": "herlev",
+    "reference_label": "carcinoma_in_situ",
+    "predicted_label": "carcinoma_in_situ",
+    "model_score": 0.6875258684158325,
+    "latency_ms": 612,
+    "status_code": 200
+  },
+  {
+    "task": "binary",
+    "reference_label": "Abnormal",
+    "predicted_label": "Abnormal",
+    "model_score": 0.9756588339805603,
+    "latency_ms": 593,
+    "status_code": 200
+  }
+]

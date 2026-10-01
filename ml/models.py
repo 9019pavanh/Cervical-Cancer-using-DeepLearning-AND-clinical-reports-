@@ -14,12 +14,12 @@ class CytologyModel(nn.Module):
         super().__init__()
         self.architecture = architecture
         if architecture == 'resnet50':
-            backbone = models.resnet50(weights=models.ResNet50_Weights.DEFAULT if pretrained else None)
+            backbone = models.resnet50(weights=models.ResNet50_Weights.IMAGENET1K_V2 if pretrained else None)
             self.target_layer = backbone.layer4
             size = backbone.fc.in_features
             backbone.fc = nn.Identity()
         elif architecture == 'efficientnet_b0':
-            backbone = models.efficientnet_b0(weights=models.EfficientNet_B0_Weights.DEFAULT if pretrained else None)
+            backbone = models.efficientnet_b0(weights=models.EfficientNet_B0_Weights.IMAGENET1K_V1 if pretrained else None)
             self.target_layer = backbone.features[-1]
             size = backbone.classifier[1].in_features
             backbone.classifier = nn.Identity()

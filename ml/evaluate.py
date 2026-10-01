@@ -14,10 +14,18 @@ from .catalog import TASKS
 def evaluate(manifest, directory):
     directory=Path(directory)
     rows=json.loads(Path(manifest).read_text(encoding='utf-8'))
+    manifest_hash=hashlib.sha256(Path(manifest).read_bytes()).hexdigest()
     signature=hashlib.sha256(''.join(r['sha256'] for r in rows).encode()).hexdigest()
     outputs=[]
     for architecture in ['resnet50','efficientnet_b0']:
         checkpoint=torch.load(directory/f'{architecture}.pt',map_location='cpu',weights_only=True)
+        metadata=checkpoint['metadata']
+        if metadata.get('manifest_sha256') != manifest_hash:
+            raise ValueError(f'{architecture}: checkpoint was trained on a different manifest or split.')
+        if metadata.get('status') != 'research':
+            raise ValueError('Full-cohort ensemble evaluation requires research checkpoints, not pilot checkpoints.')
+        if metadata.get('architecture') != architecture or metadata.get('classes') != TASKS:
+            raise ValueError(f'{architecture}: incompatible checkpoint architecture or class definitions.')
         cache=torch.load(directory/f'{architecture}-features.pt',map_location='cpu',weights_only=True)
         if cache['signature'] != signature:
             raise ValueError('Feature cache must match the full manifest. Pilot caches cannot be used here.')
@@ -39,7 +47,8 @@ def evaluate(manifest, directory):
             'classification_report':classification_report(truth,prediction,labels=list(range(len(classes))),target_names=classes,output_dict=True,zero_division=0),
             'confusion_matrix':confusion_matrix(truth,prediction,labels=list(range(len(classes)))).tolist()}
     result={'metadata':{'architecture':'equal_weight_ensemble','status':'research','clinical_validation':False,
-        'manifest_sha256':hashlib.sha256(Path(manifest).read_bytes()).hexdigest()},'metrics':metrics}
+        'manifest_sha256':manifest_hash,
+        'checkpoint_sha256':{architecture:hashlib.sha256((directory/f'{architecture}.pt').read_bytes()).hexdigest() for architecture in ['resnet50','efficientnet_b0']}},'metrics':metrics}
     (directory/'ensemble-metrics.json').write_text(json.dumps(result,indent=2),encoding='utf-8')
     print(json.dumps({task:{'balanced_accuracy':m['balanced_accuracy'],'test_count':m['test_count']} for task,m in metrics.items()},indent=2))
 

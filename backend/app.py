@@ -23,6 +23,19 @@ app = FastAPI(title='CerviSight Research API', lifespan=lifespan)
 app.mount('/static', StaticFiles(directory=ROOT/'frontend'), name='static')
 
 
+@app.middleware('http')
+async def reject_large_requests(request, call_next):
+    from fastapi.responses import JSONResponse
+    length = request.headers.get('content-length')
+    if request.url.path == '/api/predict' and length:
+        try:
+            if int(length) > MAX_BYTES + 64 * 1024:
+                return JSONResponse({'detail':'Request exceeds upload limit'},status_code=413)
+        except ValueError:
+            return JSONResponse({'detail':'Invalid content length'},status_code=400)
+    return await call_next(request)
+
+
 @app.get('/')
 def home():
     return FileResponse(ROOT/'frontend'/'index.html')

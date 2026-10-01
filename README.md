@@ -13,6 +13,7 @@ python -m venv --system-site-packages .venv
 .\.venv\Scripts\python.exe -m ml.catalog
 .\.venv\Scripts\python.exe -m ml.train
 .\.venv\Scripts\python.exe -m ml.evaluate
+.\.venv\Scripts\python.exe -m scripts.verify_inference
 .\.venv\Scripts\python.exe -m uvicorn backend.app:app --host 127.0.0.1 --port 8000
 ```
 
@@ -24,7 +25,7 @@ For a deliberately limited pilot, use `python -m ml.train --max-per-class 20`. T
 
 Five supplied directories are audited without modifying originals. Bethesda labels from Mendeley and Cytolog are harmonized conservatively; SIPaKMeD, Herlev, and custom binary labels retain separate heads. SIPaKMeD uses isolated `CROPPED` cells rather than mixing cells with whole fields. An identical RGB pixel image is deduplicated across all datasets; contradictory task/label copies are excluded. Duplicate groups are joined with inferred slide groups before a seeded 70/15/15 group split. The `CervicalCancer` directory repeats other collections, so auditing all directories is essential.
 
-`artifacts/audit.json` records counts and exclusions; `artifacts/manifest.json` records original paths, labels, pixel hashes and splits. Model reports contain per-class precision/recall/F1, balanced accuracy, confusion matrices, split sizes, loss histories, and the source-manifest hash. Model scores are uncalibrated. An equal-weight probability ensemble combines the two architectures; Grad-CAM overlays average their importance maps for the ensemble-selected class.
+`artifacts/audit.json` records counts and exclusions; `artifacts/manifest.json` records original paths, labels, pixel hashes and splits. Model reports contain per-class precision/recall/F1, balanced accuracy, confusion matrices, split sizes, loss histories, and the source-manifest hash. Model scores are uncalibrated. An equal-weight probability ensemble combines the two architectures; Grad-CAM overlays average their importance maps for the ensemble-selected class. The real-checkpoint smoke command checks one held-out image per task through the HTTP API and records local inference times; it is a functionality check, not an accuracy study.
 
 Filename groups are **slide proxies, not verified patient identities**. Pixel hashing does not catch resized, recompressed, or transformed duplicates. A trusted patient/slide registry and external institution test set are needed before publishing generalization claims. The existing repository's `cervical_cancer_project/` and clinical files are retained as legacy material; the new app does not execute that server or its clinical model. Its unpaired clinical CSV cannot establish an image–clinical multimodal cohort or future-risk endpoint.
 
@@ -41,4 +42,4 @@ docker compose up --build -d
 
 To implement the full proposed title, collect a consented, patient-linked cohort with image IDs, patient/slide IDs, clinical variables, and reference outcomes. Define whether the endpoint is current biopsy-confirmed disease or future cancer within a specified time horizon; these are different prediction problems. Use patient-level splits, fit imputers/scalers on training patients only, encode missing clinical values, and fuse a clinical MLP embedding with image embeddings. Compare image-only, clinical-only and fusion models, calibrate on validation data, and evaluate on external patients with confidence intervals and appropriate subgroup analyses. Until then the API explicitly returns `cancer_risk: null` and `clinical_fusion_used: false`.
 
-Research demonstration only. Neither cytology morphology classes nor Grad-CAM maps establish cancer stage. No patient-care validation or clinical approval is claimed. Uploaded images are not persisted by the new server. Dataset licensing and redistribution rights must be checked before sharing data or weights. Existing legacy dataset files were already present upstream; no downloaded image datasets are added by this update.
+Research demonstration only. Neither cytology morphology classes nor Grad-CAM maps establish cancer stage. No patient-care validation or clinical approval is claimed. Uploaded images are not retained after processing; the HTTP framework may use temporary spool files during upload. Dataset licensing and redistribution rights must be checked before sharing data or weights. Existing legacy dataset files were already present upstream; no downloaded image datasets are added by this update.

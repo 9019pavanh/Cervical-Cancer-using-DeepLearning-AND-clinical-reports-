@@ -1,5 +1,6 @@
 import base64
 import io
+import hashlib
 import json
 import threading
 import time
@@ -31,16 +32,32 @@ class Predictor:
                 self.models.append((model, saved['metadata']))
         if len(self.models) == 2 and self.models[0][1]['manifest_sha256'] != self.models[1][1]['manifest_sha256']:
             raise ValueError('Ensemble checkpoints were trained using different manifests.')
+        current_hashes={model.architecture:hashlib.sha256((self.model_dir/f'{model.architecture}.pt').read_bytes()).hexdigest() for model,_ in self.models}
+        self.metric_reports = {}
+        for model, metadata in self.models:
+            path = self.model_dir/f'{model.architecture}-metrics.json'
+            if path.exists():
+                saved_report=json.loads(path.read_text(encoding='utf-8'))
+                if saved_report.get('metadata') == metadata and saved_report.get('checkpoint_sha256') == current_hashes[model.architecture]:
+                    self.metric_reports[path.stem]=saved_report
+        report = self.model_dir/'ensemble-metrics.json'
+        self.evaluation = {}
+        if report.exists() and len(self.models) == 2:
+            saved_report = json.loads(report.read_text(encoding='utf-8'))
+            if saved_report.get('metadata',{}).get('checkpoint_sha256') == current_hashes:
+                self.evaluation = saved_report.get('metrics',{})
+                self.metric_reports[report.stem]=saved_report
 
     def status(self):
         return {'ready': len(self.models) == 2,
                 'models': [metadata for _, metadata in self.models],
                 'tasks': [task for task in TASKS if len(self.models) == 2 and all(task in meta['tasks'] for _,meta in self.models)],
+                'evaluation':{task:{'balanced_accuracy':m['balanced_accuracy'],'test_count':m['test_count']} for task,m in self.evaluation.items()},
                 'clinical_fusion_available': False, 'cancer_risk_prediction_available': False,
                 'intended_use': 'Research demonstration; not validated for patient care.'}
 
     def metrics(self):
-        return {p.stem: json.loads(p.read_text(encoding='utf-8')) for p in self.model_dir.glob('*-metrics.json')}
+        return self.metric_reports
 
     def predict(self, image, task):
         if task not in self.status()['tasks']:

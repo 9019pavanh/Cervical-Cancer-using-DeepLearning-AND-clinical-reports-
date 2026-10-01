@@ -11,6 +11,7 @@ from backend.app import app
 from backend.service import decode_image
 from ml.catalog import TASKS, build, identify
 from ml.models import CytologyModel, gradcam, preprocessing
+from ml.evaluate import evaluate
 
 
 def test_taxonomies_remain_separate(tmp_path):
@@ -61,6 +62,17 @@ def test_duplicates_join_entire_slide_groups(tmp_path):
     assert len(rows)==2
     assert len({r['group'] for r in rows})==1
     assert len({r['split'] for r in rows})==1
+
+
+def test_evaluation_rejects_changed_split_with_same_images(tmp_path):
+    # A cached embedding remains valid for an image, but old trained weights cannot
+    # be evaluated against a newly shuffled "test" membership.
+    manifest=tmp_path/'manifest.json'
+    manifest.write_text(json.dumps([{'sha256':'same-image','task':'bethesda','label':'HSIL','split':'test'}]))
+    torch.save({'metadata':{'architecture':'resnet50','classes':TASKS,'status':'research',
+                            'manifest_sha256':'old-training-split'}},tmp_path/'resnet50.pt')
+    with pytest.raises(ValueError,match='different manifest or split'):
+        evaluate(manifest,tmp_path)
 
 
 def test_api_rejects_invalid_oversized_and_unsupported_inputs(tmp_path,monkeypatch):

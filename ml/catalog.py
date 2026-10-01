@@ -108,7 +108,7 @@ def build(config, output, seed=42):
               'sources': dict(Counter(r['source'] for r in records)),
               'limitations': ['Slide groups inferred from filenames; patient-level leakage remains unverified.',
                               'Pixel-exact duplicates removed; transformed duplicates may remain.',
-                              'No clinical variables or longitudinal cancer-risk outcomes supplied.']}
+                              'No patient-linked clinical variables or longitudinal cancer-risk outcomes supplied for image training.']}
     output = Path(output)
     output.mkdir(parents=True, exist_ok=True)
     (output/'manifest.json').write_text(json.dumps(unique, indent=2), encoding='utf-8')
