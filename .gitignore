@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.venv/
+.env
+artifacts/*
+!artifacts/.gitkeep
+configs/*.local.json
+*.log
+.pytest_cache/
+.remote-reference/
+calculator/
+add_two_numbers.py

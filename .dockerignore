@@ -1,0 +1,9 @@
+.git
+.venv
+.remote-reference
+__pycache__
+artifacts
+configs/*.local.json
+calculator
+cervical_cancer_project
+*.log
