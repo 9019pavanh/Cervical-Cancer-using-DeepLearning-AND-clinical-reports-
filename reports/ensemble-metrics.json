@@ -1,0 +1,353 @@
+{
+  "metadata": {
+    "architecture": "equal_weight_ensemble",
+    "status": "research",
+    "clinical_validation": false,
+    "manifest_sha256": "a7348e6a52255fb64adf215fb70e5ba54512d30b60e1959dffc68962b7248d82",
+    "checkpoint_sha256": {
+      "resnet50": "5ae7919cfbb0078eda00f760215dba1cb9dff8176b509874b7ecc9159df1e72b",
+      "efficientnet_b0": "1184fcaf1a5b070c964d8341ee4974a4657286e990110ec44019cdf320e674ab"
+    }
+  },
+  "metrics": {
+    "bethesda": {
+      "test_count": 425,
+      "balanced_accuracy": 0.32521128194684856,
+      "classification_report": {
+        "ASCUS": {
+          "precision": 0.08737864077669903,
+          "recall": 0.1836734693877551,
+          "f1-score": 0.11842105263157894,
+          "support": 49.0
+        },
+        "HSIL": {
+          "precision": 0.04032258064516129,
+          "recall": 0.21739130434782608,
+          "f1-score": 0.06802721088435375,
+          "support": 23.0
+        },
+        "LSIL": {
+          "precision": 0.4523809523809524,
+          "recall": 0.14285714285714285,
+          "f1-score": 0.21714285714285714,
+          "support": 133.0
+        },
+        "NILM": {
+          "precision": 0.746031746031746,
+          "recall": 0.9591836734693877,
+          "f1-score": 0.8392857142857143,
+          "support": 98.0
+        },
+        "SCC": {
+          "precision": 0.5,
+          "recall": 0.12295081967213115,
+          "f1-score": 0.19736842105263158,
+          "support": 122.0
+        },
+        "accuracy": 0.3341176470588235,
+        "macro avg": {
+          "precision": 0.3652227839669117,
+          "recall": 0.32521128194684856,
+          "f1-score": 0.28804905119942714,
+          "support": 425.0
+        },
+        "weighted avg": {
+          "precision": 0.4693805894839405,
+          "recall": 0.3341176470588235,
+          "f1-score": 0.3354734230534319,
+          "support": 425.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          9,
+          24,
+          6,
+          5,
+          5
+        ],
+        [
+          6,
+          5,
+          0,
+          12,
+          0
+        ],
+        [
+          47,
+          48,
+          19,
+          9,
+          10
+        ],
+        [
+          1,
+          0,
+          3,
+          94,
+          0
+        ],
+        [
+          40,
+          47,
+          14,
+          6,
+          15
+        ]
+      ]
+    },
+    "sipakmed": {
+      "test_count": 631,
+      "balanced_accuracy": 0.9189057828038182,
+      "classification_report": {
+        "Dyskeratotic": {
+          "precision": 0.8441558441558441,
+          "recall": 0.9923664122137404,
+          "f1-score": 0.9122807017543859,
+          "support": 131.0
+        },
+        "Koilocytotic": {
+          "precision": 0.9019607843137255,
+          "recall": 0.8023255813953488,
+          "f1-score": 0.8492307692307692,
+          "support": 172.0
+        },
+        "Metaplastic": {
+          "precision": 0.8879310344827587,
+          "recall": 0.8512396694214877,
+          "f1-score": 0.869198312236287,
+          "support": 121.0
+        },
+        "Parabasal": {
+          "precision": 0.9655172413793104,
+          "recall": 0.9911504424778761,
+          "f1-score": 0.9781659388646288,
+          "support": 113.0
+        },
+        "Superficial-Intermediate": {
+          "precision": 0.9782608695652174,
+          "recall": 0.9574468085106383,
+          "f1-score": 0.967741935483871,
+          "support": 94.0
+        },
+        "accuracy": 0.9080824088748018,
+        "macro avg": {
+          "precision": 0.9155651547793713,
+          "recall": 0.9189057828038182,
+          "f1-score": 0.9153235315139885,
+          "support": 631.0
+        },
+        "weighted avg": {
+          "precision": 0.9100179012262799,
+          "recall": 0.9080824088748018,
+          "f1-score": 0.9068937449212275,
+          "support": 631.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          130,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          19,
+          138,
+          11,
+          2,
+          2
+        ],
+        [
+          4,
+          13,
+          103,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          112,
+          0
+        ],
+        [
+          0,
+          2,
+          2,
+          0,
+          90
+        ]
+      ]
+    },
+    "herlev": {
+      "test_count": 139,
+      "balanced_accuracy": 0.690461038399851,
+      "classification_report": {
+        "carcinoma_in_situ": {
+          "precision": 0.4090909090909091,
+          "recall": 0.6428571428571429,
+          "f1-score": 0.5,
+          "support": 14.0
+        },
+        "light_dysplastic": {
+          "precision": 0.53125,
+          "recall": 0.5862068965517241,
+          "f1-score": 0.5573770491803278,
+          "support": 29.0
+        },
+        "moderate_dysplastic": {
+          "precision": 0.5357142857142857,
+          "recall": 0.5172413793103449,
+          "f1-score": 0.5263157894736842,
+          "support": 29.0
+        },
+        "normal_columnar": {
+          "precision": 0.6153846153846154,
+          "recall": 0.7272727272727273,
+          "f1-score": 0.6666666666666666,
+          "support": 11.0
+        },
+        "normal_intermediate": {
+          "precision": 0.6666666666666666,
+          "recall": 1.0,
+          "f1-score": 0.8,
+          "support": 6.0
+        },
+        "normal_superficiel": {
+          "precision": 1.0,
+          "recall": 0.8333333333333334,
+          "f1-score": 0.9090909090909091,
+          "support": 12.0
+        },
+        "severe_dysplastic": {
+          "precision": 0.8,
+          "recall": 0.5263157894736842,
+          "f1-score": 0.6349206349206349,
+          "support": 38.0
+        },
+        "accuracy": 0.6115107913669064,
+        "macro avg": {
+          "precision": 0.6511580681223538,
+          "recall": 0.690461038399851,
+          "f1-score": 0.6563387213331746,
+          "support": 139.0
+        },
+        "weighted avg": {
+          "precision": 0.6463199121022862,
+          "recall": 0.6115107913669064,
+          "f1-score": 0.6158021632401058,
+          "support": 139.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          9,
+          2,
+          1,
+          1,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          17,
+          9,
+          0,
+          1,
+          0,
+          2
+        ],
+        [
+          2,
+          10,
+          15,
+          1,
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          1,
+          8,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          6,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          2,
+          10,
+          0
+        ],
+        [
+          10,
+          3,
+          2,
+          3,
+          0,
+          0,
+          20
+        ]
+      ]
+    },
+    "binary": {
+      "test_count": 417,
+      "balanced_accuracy": 0.9855676049838487,
+      "classification_report": {
+        "Abnormal": {
+          "precision": 0.9863636363636363,
+          "recall": 0.9863636363636363,
+          "f1-score": 0.9863636363636363,
+          "support": 220.0
+        },
+        "Normal": {
+          "precision": 0.9847715736040609,
+          "recall": 0.9847715736040609,
+          "f1-score": 0.9847715736040609,
+          "support": 197.0
+        },
+        "accuracy": 0.9856115107913669,
+        "macro avg": {
+          "precision": 0.9855676049838487,
+          "recall": 0.9855676049838487,
+          "f1-score": 0.9855676049838487,
+          "support": 417.0
+        },
+        "weighted avg": {
+          "precision": 0.9856115107913669,
+          "recall": 0.9856115107913669,
+          "f1-score": 0.9856115107913669,
+          "support": 417.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          217,
+          3
+        ],
+        [
+          3,
+          194
+        ]
+      ]
+    }
+  }
+}
