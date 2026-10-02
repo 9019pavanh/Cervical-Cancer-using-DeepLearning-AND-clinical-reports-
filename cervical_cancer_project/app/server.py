@@ -71,7 +71,11 @@ def health_check():
         "device": str(diagnostic_service.device),
         "models_loaded": {
             "resnet18": diagnostic_service.resnet_model is not None,
-            "hybrid_model": diagnostic_service.hybrid_model is not None,
+            "efficientnet_b0": diagnostic_service.efficientnet_model is not None,
+            "multimodal_hybrid": (
+                diagnostic_service.resnet_model is not None
+                and diagnostic_service.clinical_predictor is not None
+            ),
             "clinical_predictor": diagnostic_service.clinical_predictor is not None,
         },
         "version": "2.0.0"

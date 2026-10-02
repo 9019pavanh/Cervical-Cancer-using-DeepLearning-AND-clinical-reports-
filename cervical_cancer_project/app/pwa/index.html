@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#030814">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>Research Dashboard · CervixAI Lab</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/theme.css">
+  <link rel="stylesheet" href="/assets/dashboard.css">
+</head>
+<body class="app-page">
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+  <aside id="sidebar" class="sidebar">
+    <a class="brand sidebar-brand" href="/">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="7.5" stroke="currentColor"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/><path d="M12 1.8v3M12 19.2v3M1.8 12h3M19.2 12h3" stroke="currentColor" stroke-linecap="round"/></svg></span>
+      <span class="brand-copy">CervixAI Lab<small>Research workspace</small></span>
+    </a>
+    <div class="sidebar-label">Workspace</div>
+    <nav class="side-nav" aria-label="Dashboard navigation">
+      <a href="#overview" data-section-link class="active"><span>⌂</span>Overview</a>
+      <a href="#image-lab" data-section-link><span>◉</span>Image lab</a>
+      <a href="#clinical-lab" data-section-link><span>⌁</span>Clinical risk</a>
+      <a href="#demo-results" data-section-link><span>✦</span>Demo results</a>
+      <a href="#evidence" data-section-link><span>▦</span>Model evidence</a>
+    </nav>
+    <div class="sidebar-spacer"></div>
+    <div class="sidebar-model-card"><span class="eyebrow">Dataset status</span><strong>5 cytology classes</strong><small>Grouped source-aware evaluation</small><div class="sidebar-line"><span></span><b>Leakage guard active</b></div></div>
+    <div class="sidebar-footer"><span class="privacy-dot"></span><span>Research use only</span></div>
+  </aside>
+
+  <div class="app-shell">
+    <header class="app-topbar">
+      <div class="topbar-left"><button id="sidebar-toggle" class="icon-button" aria-label="Open navigation">☰</button><div><span class="topbar-kicker">M.Tech Medical AI Research</span><strong>Research dashboard</strong></div></div>
+      <div class="topbar-actions"><span id="preview-badge" class="tag tag-preview" hidden>Visual preview</span><button id="install-button" class="button button-ghost install-button" hidden>Install app</button><span id="user-name" class="user-chip">Researcher</span><button id="logout-button" class="button button-ghost logout-button">Log out</button></div>
+    </header>
+
+    <main class="dashboard-main">
+      <section id="overview" class="dashboard-hero">
+        <div><span class="eyebrow">Explainable cervical AI</span><h1>Research overview</h1><p>Inspect image predictions, independent clinical risk estimates, and clearly labelled synthetic demonstrations.</p></div>
+        <div class="hero-actions"><a class="button button-primary" href="#image-lab">Upload image</a><a class="button button-ghost" href="#demo-results">View demo gallery</a></div>
+      </section>
+
+      <div class="research-banner"><strong>Research prototype — not a medical diagnosis.</strong><span>AI-generated research prediction. Please consult a qualified medical professional for clinical evaluation.</span></div>
+
+      <section class="summary-grid" aria-label="Dashboard summary">
+        <article class="summary-card"><span class="summary-icon blue">♙</span><div><small>Demo patients</small><strong id="patient-count">5</strong><span>Clearly synthetic records</span></div></article>
+        <article class="summary-card"><span class="summary-icon cyan">↗</span><div><small>Demo predictions</small><strong id="prediction-count">5</strong><span>Image + risk examples</span></div></article>
+        <article class="summary-card"><span class="summary-icon red">!</span><div><small>High-risk demos</small><strong id="high-risk-count">2</strong><span>Not medically valid ground truth</span></div></article>
+        <article class="summary-card"><span class="summary-icon green">✓</span><div><small>Low-risk demos</small><strong id="low-risk-count">1</strong><span>Interface demonstration only</span></div></article>
+      </section>
+
+      <section id="image-lab" class="dashboard-section surface">
+        <div class="section-bar"><div><span class="eyebrow">01 · Image classification</span><h2>Microscopy image lab</h2><p>Upload a cervical-cell image and inspect the predicted cell class with Grad-CAM.</p></div><label class="model-picker"><span>Selected model</span><select id="model-select" aria-label="Select image model"><option>Loading model…</option></select></label></div>
+        <div class="lab-grid">
+          <div class="upload-card">
+            <label class="upload-drop" for="image-input"><span class="upload-icon">↑</span><strong>Drop microscopy image here</strong><small>or tap to browse · PNG, JPG, BMP · max 10 MB</small><input id="image-input" type="file" accept="image/*" hidden></label>
+            <div class="image-preview"><img id="preview" alt="Selected microscopy image"><span id="preview-empty">Your selected image will appear here</span></div>
+            <button id="analyse-button" class="button button-primary full-button" disabled>Run classification</button>
+            <div id="image-message" class="message" role="status"></div>
+          </div>
+          <div class="result-card">
+            <div class="result-card-head"><div><span class="eyebrow">Model output</span><h3>Prediction explanation</h3></div><span class="tag tag-success">Grad-CAM</span></div>
+            <div id="result-empty" class="result-empty"><span class="empty-orbit">✦</span><strong>Waiting for an image</strong><small>Run the classifier to see probabilities and the visual explanation.</small></div>
+            <div id="image-results" class="image-results" hidden>
+              <div class="prediction-summary"><span>Predicted cell class</span><strong id="prediction">—</strong><small id="confidence">—</small></div>
+              <div class="gradcam-panel"><div class="mini-label">Grad-CAM explanation</div><img id="gradcam" alt="Grad-CAM heatmap overlay"></div>
+              <div class="probabilities-panel"><div class="mini-label">Class probabilities</div><div id="probability-list"></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="clinical-lab" class="dashboard-section surface">
+        <div class="section-bar"><div><span class="eyebrow">02 · Independent clinical risk</span><h2>Early-risk research estimate</h2><p>Clinical data is evaluated separately because no verified patient linkage exists between the image and clinical datasets.</p></div><span id="clinical-status" class="tag">Checking checkpoint…</span></div>
+        <div class="clinical-layout">
+          <div class="clinical-form">
+            <div class="clinical-grid"><label>Age<input id="age" type="number" value="35" min="15" max="90"></label><label>Smoking<select id="smokes"><option value="0">No</option><option value="1">Yes</option></select></label><label>HPV history<select id="hpv"><option value="0">No / unknown</option><option value="1">Positive</option></select></label><label>Hormonal contraceptives<select id="contraceptives"><option value="0">No</option><option value="1">Yes</option></select></label></div>
+            <button id="clinical-button" class="button button-primary">Estimate independent risk</button><div id="clinical-result" class="message" role="status"></div>
+          </div>
+          <div class="clinical-note"><span class="note-icon">i</span><div><strong>Interpretation guard</strong><p>This compact form supplies four factors. Any remaining model inputs are imputed from training-only statistics. The result is a research estimate, not a diagnosis or screening decision.</p></div></div>
+        </div>
+      </section>
+
+      <section id="demo-results" class="dashboard-section">
+        <div class="section-bar demo-heading"><div><span class="eyebrow">03 · Synthetic demonstration</span><h2>Five example patient results</h2><p>Use these cards to preview how patient information, image classification, clinical risk, and research interpretation are separated.</p></div><span class="tag tag-warning">Synthetic demo data</span></div>
+        <div id="demo-grid" class="demo-grid"><div class="demo-loading surface">Loading synthetic demonstration records…</div></div>
+      </section>
+
+      <section id="evidence" class="dashboard-section surface evidence-section">
+        <div class="section-bar"><div><span class="eyebrow">04 · Measured evidence</span><h2>Model performance summary</h2><p>Only untouched grouped test metrics are presented as final image-model evidence.</p></div><span class="tag">748 grouped test images</span></div>
+        <div class="evidence-table-wrap"><table><thead><tr><th>Model</th><th>Status</th><th>Accuracy</th><th>Macro F1</th><th>ROC-AUC</th><th>PR-AUC</th></tr></thead><tbody><tr><td><strong>EfficientNet-B0</strong><small>Image classification</small></td><td><span class="table-status ready">Evaluated</span></td><td>93.58%</td><td>93.97%</td><td>0.9934</td><td>0.9794</td></tr><tr><td><strong>ResNet50</strong><small>Image classification</small></td><td><span class="table-status pending">Training required</span></td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><strong>Clinical MLP</strong><small>Independent risk experiment</small></td><td><span class="table-status exploratory">Exploratory</span></td><td>70.54%</td><td>20.83%</td><td>0.6395</td><td>0.1545</td></tr></tbody></table></div>
+        <p class="table-footnote">EfficientNet-B0 accuracy 95% confidence interval: 91.71–95.32%. No 97% claim is made without a measured unseen test result.</p>
+      </section>
+
+      <section class="dashboard-section surface safeguards"><div class="section-bar"><div><span class="eyebrow">05 · Scientific safeguards</span><h2>Keep the interpretation honest</h2></div></div><div class="safeguard-grid"><article><span>01</span><strong>Cell classes are not cancer diagnoses</strong><p>The available dataset labels are Dyskeratotic, Koilocytotic, Metaplastic, Parabasal and Superficial-Intermediate.</p></article><article><span>02</span><strong>Clinical data stays independent</strong><p>Image and clinical records have no shared patient identifier, so feature-level fusion is not claimed.</p></article><article><span>03</span><strong>Every demo is synthetic</strong><p>Demo records exist to preview the product UI and must never be treated as patient information or ground truth.</p></article></div></section>
+    </main>
+    <footer class="app-footer"><span>CervixAI Lab · Explainable cervical AI research</span><span>Not a medical device · <a href="/">About the framework</a></span></footer>
+  </div>
+  <script src="/assets/dashboard.js"></script>
+</body>
+</html>

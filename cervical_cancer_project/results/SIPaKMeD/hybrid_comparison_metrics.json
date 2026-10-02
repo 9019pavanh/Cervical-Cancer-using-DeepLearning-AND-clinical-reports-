@@ -1,0 +1,24 @@
+{
+  "selection_split": "validation",
+  "evaluation_split": "grouped hold-out test",
+  "tta_views": 3,
+  "resnet18": {
+    "accuracy": 0.9745989304812834,
+    "macro_f1": 0.9765931912321684,
+    "macro_roc_auc": 0.9979192525227264
+  },
+  "efficientnet_b0": {
+    "accuracy": 0.9358288770053476,
+    "macro_f1": 0.9397129661133832,
+    "macro_roc_auc": 0.9933652442656984
+  },
+  "hybrid": {
+    "accuracy": 0.9745989304812834,
+    "macro_f1": 0.9765931912321684,
+    "macro_roc_auc": 0.9980985726597066
+  },
+  "hybrid_weights": {
+    "resnet18": 0.9500000000000001,
+    "efficientnet_b0": 0.04999999999999993
+  }
+}

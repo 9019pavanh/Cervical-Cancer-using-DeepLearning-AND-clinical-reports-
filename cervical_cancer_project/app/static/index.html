@@ -1,645 +1,134 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cervical Cancer AI Diagnostic Suite | Bethesda Staging & Clinical Risk</title>
-    <meta name="description" content="Deep learning cytology classification with ResNet-18, EfficientNet-B0, and Dual Hybrid Fusion, Grad-CAM visual saliency, Bethesda System cancer staging, and clinical risk prediction.">
-    <link rel="stylesheet" href="/style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>An Explainable Multimodal Hybrid Deep Learning Framework for Cervical Disease Classification and Early Cervical Cancer Risk Prediction</title>
+  <meta name="description" content="M.Tech research prototype combining explainable cytology classification and clinical risk prediction through multimodal decision fusion.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/comparison.css">
 </head>
 <body>
-
-    <!-- ==============================================================================
-         HEADER
-         ============================================================================== -->
-    <header class="app-header">
-        <div class="header-container">
-            <div class="brand-wrapper">
-                <div class="brand-icon">🔬</div>
-                <div class="brand-text">
-                    <h1>Cervical Cancer AI Diagnostic Suite</h1>
-                    <p>Dual-Stream Deep Learning &bull; Bethesda System Staging &bull; Clinical Risk Assessment</p>
-                </div>
-            </div>
-
-            <div class="header-badges">
-                <span class="badge badge-live">
-                    <span class="badge-pulse"></span> PyTorch Engine Online
-                </span>
-                <span class="badge badge-accuracy">
-                    ResNet-18: 94.82% Acc | Hybrid: 96.15% Acc
-                </span>
-            </div>
+  <header class="hero">
+    <div class="shell hero-inner">
+      <div>
+        <span class="eyebrow">M.Tech Research Project</span>
+        <h1>An Explainable Multimodal Hybrid Deep Learning Framework for Cervical Disease Classification and Early Cervical Cancer Risk Prediction</h1>
         </div>
-    </header>
-
-    <!-- ==============================================================================
-         NAV TABS
-         ============================================================================== -->
-    <div class="nav-tabs-container">
-        <nav class="nav-tabs" role="tablist">
-            <button class="tab-btn active" id="tab-btn-cytology" onclick="switchTab('cytology')" role="tab">
-                <span class="tab-icon">🔬</span> 1. Cytology AI & Staging
-            </button>
-            <button class="tab-btn" id="tab-btn-clinical" onclick="switchTab('clinical')" role="tab">
-                <span class="tab-icon">📋</span> 2. Patient Clinical Risk
-            </button>
-            <button class="tab-btn" id="tab-btn-report" onclick="switchTab('report')" role="tab">
-                <span class="tab-icon">📑</span> 3. Multimodal Diagnostic Report
-            </button>
-            <button class="tab-btn" id="tab-btn-benchmarks" onclick="switchTab('benchmarks')" role="tab">
-                <span class="tab-icon">📊</span> 4. Model Benchmarks
-            </button>
-        </nav>
+      <div class="hero-metrics" aria-label="validated model metrics">
+        <div><strong>97.46%</strong><span>Grouped test accuracy</span></div>
+        <div><strong>0.9979</strong><span>Macro ROC-AUC</span></div>
+        <div><strong>3-view</strong><span>Test-time augmentation</span></div>
+      </div>
     </div>
+  </header>
 
-    <!-- ==============================================================================
-         MAIN WORKSPACE
-         ============================================================================== -->
-    <main class="main-content">
+  <nav class="top-nav" aria-label="Project sections">
+    <div class="shell nav-inner">
+      <button class="tab-btn active" id="tab-btn-overview" onclick="switchTab('overview')">Overview</button>
+      <button class="tab-btn" id="tab-btn-cytology" onclick="switchTab('cytology')">1. Cytology</button>
+      <button class="tab-btn" id="tab-btn-clinical" onclick="switchTab('clinical')">2. Clinical Risk</button>
+      <button class="tab-btn" id="tab-btn-report" onclick="switchTab('report')">3. Hybrid Result</button>
+      <button class="tab-btn" id="tab-btn-benchmarks" onclick="switchTab('benchmarks')">Methodology</button>
+    </div>
+  </nav>
 
-        <!-- ==========================================================================
-             TAB 1: CYTOLOGY AI IMAGE ANALYSIS & STAGING
-             ========================================================================== -->
-        <section id="tab-cytology" class="tab-section active">
-            <div class="grid-1-2">
-                <!-- Left Column: Upload & Sample Gallery -->
-                <div class="glass-card">
-                    <h2 class="card-title">Upload Cytology Image</h2>
-                    <p class="card-subtitle">Upload high-resolution Pap smear microscopy (.png, .jpg, .bmp)</p>
+  <main class="shell main-content">
+    <section id="tab-overview" class="tab-section active">
+      <div class="section-heading">
+        <span class="eyebrow">Framework Overview</span>
+        <h2>Two trained modules, one explainable hybrid decision</h2>
+        <p>The framework separates visual evidence from patient context, then combines them only at the final decision layer.</p>
+      </div>
+      <div class="pipeline">
+        <article class="module-card"><span class="step">01</span><h3>Cytology module</h3><p>ResNet-18 and EfficientNet-B0 classify five SIPaKMeD categories; validation-weighted fusion produces the image consensus.</p><span class="tech">Dual CNN hybrid · 97.46%</span></article>
+        <div class="connector">+</div>
+        <article class="module-card"><span class="step">02</span><h3>Clinical module</h3><p>A Random Forest estimates contextual risk from demographic, behavioral, contraceptive, and infection factors.</p><span class="tech">Tabular ML · Risk probability</span></article>
+        <div class="connector">→</div>
+        <article class="module-card accent"><span class="step">03</span><h3>Multimodal fusion</h3><p>Late decision fusion combines image abnormality (70%) with clinical risk (30%) without mixing incompatible raw features.</p><span class="tech">Transparent weighted fusion</span></article>
+      </div>
+      <div class="notice"><strong>Research-use prototype.</strong> Output supports experimentation and does not replace slide-level pathology, HPV testing, histology, or clinical judgment.</div>
+      <div class="cta-row"><button class="primary-btn" onclick="switchTab('cytology')">Start analysis</button><button class="secondary-btn" onclick="switchTab('benchmarks')">View methodology</button></div>
+    </section>
 
-                    <div class="upload-dropzone" id="dropzone">
-                        <div class="dropzone-icon">📷</div>
-                        <div class="dropzone-title">Drag & Drop Cytology Cell</div>
-                        <div class="dropzone-desc">or click to browse files</div>
-                        <input type="file" id="image-file-input" class="file-input-hidden" accept="image/*">
-                    </div>
+    <section id="tab-cytology" class="tab-section">
+      <div class="section-heading"><span class="eyebrow">Module 1</span><h2>Explainable cytology classification</h2><p>Upload a cell image or use a sample. Grad-CAM highlights regions influencing the prediction.</p></div>
+      <div class="analysis-grid">
+        <aside class="panel">
+          <h3>Input image</h3>
+          <label class="dropzone" id="dropzone" for="image-file-input"><span class="upload-icon">↑</span><strong>Choose or drop an image</strong><small>PNG, JPG or BMP</small></label>
+          <input id="image-file-input" type="file" accept="image/*" hidden>
+          <p class="mini-title">Sample cells</p>
+          <div class="sample-grid" id="sample-chips-container">
+            <button onclick="loadSample('im_Dyskeratotic')">Dyskeratotic</button>
+            <button onclick="loadSample('im_Koilocytotic')">Koilocytotic</button>
+            <button onclick="loadSample('im_Metaplastic')">Metaplastic</button>
+            <button onclick="loadSample('im_Parabasal')">Parabasal</button>
+            <button onclick="loadSample('im_Superficial-Intermediate')">Superficial</button>
+          </div>
+        </aside>
+        <div class="panel viewer-panel">
+          <div class="panel-head"><div><h3>Grad-CAM explanation</h3><p>Compare the source image and learned attention.</p></div><div class="view-switch"><button id="btn-view-overlay" class="view-btn active" onclick="setViewMode('overlay')">Overlay</button><button id="btn-view-heatmap" class="view-btn" onclick="setViewMode('heatmap')">Heatmap</button><button id="btn-view-original" class="view-btn" onclick="setViewMode('original')">Original</button></div></div>
+          <div class="image-stage"><div id="image-loading-spinner" class="loader" hidden></div><img id="main-cytology-img" src="/samples/im_Parabasal.png" alt="Cytology analysis"></div>
+        </div>
+      </div>
+      <div class="result-grid">
+        <article class="panel result-card"><span class="result-label">Predicted cell category</span><h3 id="predicted-cell-title">Run an analysis</h3><p id="predicted-confidence-sub">Model confidence will appear here.</p><span class="status-pill" id="bethesda-stage-badge">Awaiting image</span></article>
+        <article class="panel"><h3>Class probabilities</h3><div id="class-probabilities-list" class="prob-list"><p class="muted">No prediction yet.</p></div></article>
+      </div>
+      <div class="panel model-output-panel"><div><span class="result-label">Image-model comparison</span><h3>ResNet-18, EfficientNet-B0 and hybrid consensus</h3></div><div id="image-model-comparison" class="output-cards"><p class="muted">Run an image analysis to compare predictions.</p></div></div>
+      <div class="notice"><strong>Interpretation note:</strong> the model predicts a cell morphology category. Bethesda, CIN, and FIGO diagnoses require complete clinical and pathology assessment.</div>
+      <div class="cta-row"><button class="primary-btn" onclick="switchTab('clinical')">Continue to clinical risk</button></div>
+    </section>
 
-                    <div class="sample-gallery-title">⚡ Instant Test Samples</div>
-                    <div class="sample-chips" id="sample-chips-container">
-                        <!-- Populated by JavaScript -->
-                        <div class="sample-chip" onclick="loadSample('im_Dyskeratotic')">
-                            <img src="/samples/im_Dyskeratotic.png" class="sample-thumb" alt="Dyskeratotic">
-                            <div class="sample-info">
-                                <div class="sample-name">Dyskeratotic Cells</div>
-                                <div class="sample-badge" style="color: #ff3b30;">HSIL / CIN 2-3 (High Risk)</div>
-                            </div>
-                        </div>
-                        <div class="sample-chip" onclick="loadSample('im_Koilocytotic')">
-                            <img src="/samples/im_Koilocytotic.png" class="sample-thumb" alt="Koilocytotic">
-                            <div class="sample-info">
-                                <div class="sample-name">Koilocytotic Cells</div>
-                                <div class="sample-badge" style="color: #ff9500;">LSIL / HPV Effect (CIN 1)</div>
-                            </div>
-                        </div>
-                        <div class="sample-chip" onclick="loadSample('im_Metaplastic')">
-                            <img src="/samples/im_Metaplastic.png" class="sample-thumb" alt="Metaplastic">
-                            <div class="sample-info">
-                                <div class="sample-name">Squamous Metaplasia</div>
-                                <div class="sample-badge" style="color: #007aff;">Benign Reactive Transformation</div>
-                            </div>
-                        </div>
-                        <div class="sample-chip" onclick="loadSample('im_Parabasal')">
-                            <img src="/samples/im_Parabasal.png" class="sample-thumb" alt="Parabasal">
-                            <div class="sample-info">
-                                <div class="sample-name">Parabasal Cells</div>
-                                <div class="sample-badge" style="color: #34c759;">NILM (Negative for Malignancy)</div>
-                            </div>
-                        </div>
-                        <div class="sample-chip" onclick="loadSample('im_Superficial-Intermediate')">
-                            <img src="/samples/im_Superficial-Intermediate.png" class="sample-thumb" alt="Superficial">
-                            <div class="sample-info">
-                                <div class="sample-name">Superficial / Intermediate</div>
-                                <div class="sample-badge" style="color: #30d158;">NILM (Healthy Normal Squamous)</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <section id="tab-clinical" class="tab-section">
+      <div class="section-heading"><span class="eyebrow">Module 2</span><h2>Early clinical risk prediction</h2><p>Enter key risk factors used by the trained tabular model.</p></div>
+      <div class="clinical-layout">
+        <form id="clinical-risk-form" class="panel form-panel" onsubmit="event.preventDefault(); submitClinicalForm();">
+          <div class="form-grid">
+            <label>Age<input id="inp-age" type="number" min="15" max="90" value="35"></label>
+            <label>First intercourse age<input id="inp-first-intercourse" type="number" min="10" max="50" value="17"></label>
+            <label>Sexual partners<input id="inp-partners" type="number" min="0" max="50" value="3"></label>
+            <label>Pregnancies<input id="inp-pregnancies" type="number" min="0" max="20" value="2"></label>
+            <label>Smoking<select id="inp-smokes" onchange="toggleSmokingInputs()"><option value="0">No</option><option value="1">Yes</option></select></label>
+            <label>Smoking years<input id="inp-smokes-years" type="number" min="0" max="70" value="0"></label>
+            <label>Packs/year<input id="inp-smokes-packs" type="number" min="0" max="100" step="0.1" value="0"></label>
+            <label>Hormonal contraceptives<select id="inp-hc"><option value="0">No</option><option value="1" selected>Yes</option></select></label>
+            <label>Contraceptive years<input id="inp-hc-years" type="number" min="0" max="50" step="0.1" value="5"></label>
+            <label>IUD<select id="inp-iud"><option value="0" selected>No</option><option value="1">Yes</option></select></label>
+            <label>IUD years<input id="inp-iud-years" type="number" min="0" max="40" step="0.1" value="0"></label>
+            <label>STD history<select id="inp-stds"><option value="0">No</option><option value="1" selected>Yes</option></select></label>
+            <label>HPV history<select id="inp-std-hpv"><option value="0">No / unknown</option><option value="1" selected>Positive</option></select></label>
+            <label>HIV status<select id="inp-std-hiv"><option value="0" selected>Negative</option><option value="1">Positive</option></select></label>
+          </div>
+          <button id="btn-calculate-risk" class="primary-btn" type="submit">Calculate risk</button>
+        </form>
+        <aside class="panel risk-result"><span class="result-label">Clinical risk probability</span><strong id="risk-score-val" class="risk-number">—</strong><span id="clinical-risk-badge" class="status-pill">Awaiting inputs</span><p id="clinical-summary-text" class="muted">Submit the form to calculate contextual risk.</p><h3>Key contributing factors</h3><div id="risk-drivers-list"></div><h3>Model guidance</h3><div id="suggestions-list"></div></aside>
+      </div>
+      <div class="cta-row"><button class="primary-btn" onclick="generateAndShowReport()">Generate hybrid result</button></div>
+    </section>
 
-                <!-- Right Column: Results & Staging View -->
-                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-                    
-                    <!-- Top Visualizer Card -->
-                    <div class="glass-card">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
-                            <div>
-                                <h2 class="card-title">Explainable AI & Visual Saliency (Grad-CAM)</h2>
-                                <p class="card-subtitle" style="margin-bottom: 0;">Microscopy feature attention mapping on morphological criteria</p>
-                            </div>
-                            <div class="viewer-controls">
-                                <button class="view-btn active" id="btn-view-overlay" onclick="setViewMode('overlay')">Overlay</button>
-                                <button class="view-btn" id="btn-view-heatmap" onclick="setViewMode('heatmap')">Heatmap</button>
-                                <button class="view-btn" id="btn-view-original" onclick="setViewMode('original')">Microscopy</button>
-                            </div>
-                        </div>
+    <section id="tab-report" class="tab-section">
+      <div class="section-heading"><span class="eyebrow">Multimodal Output</span><h2>Hybrid decision summary</h2><p>A concise synthesis of visual evidence and clinical context.</p></div>
+      <div class="fusion-hero panel" id="rep-triage-banner"><div><span class="result-label">Hybrid assessment</span><h3 id="rep-triage-title">Complete both modules</h3><p id="rep-urgency-val">The combined result will appear here.</p></div><div class="fusion-score"><strong id="rep-hybrid-score">—</strong><span>Fusion score</span></div></div>
+      <div class="fusion-grid">
+        <article class="panel"><span class="result-label">Visual evidence · 70%</span><img id="rep-cytology-thumb" class="report-thumb" src="/samples/im_Parabasal.png" alt="Grad-CAM result"><h3 id="rep-cell-class">—</h3><p>Confidence: <strong id="rep-ai-conf">—</strong></p><p id="rep-cytology-desc" class="muted">—</p></article>
+        <article class="panel"><span class="result-label">Clinical context · 30%</span><strong id="rep-pat-risk" class="component-score">—</strong><p id="rep-clinical-summary" class="muted">—</p><div id="rep-actions-container"></div></article>
+      </div>
+      <div class="notice"><strong>Fusion rationale:</strong> morphology receives the larger weight because it is direct visual evidence; clinical factors adjust risk and support early triage. This is a research score, not a diagnosis.</div>
+    </section>
 
-                        <div class="image-canvas-wrapper">
-                            <div id="image-loading-spinner" style="display: none; position: absolute; z-index: 10;">
-                                <div class="spinner"></div>
-                            </div>
-                            <img id="main-cytology-img" src="/samples/im_Dyskeratotic.png" class="image-display" alt="Cytology View">
-                        </div>
-                    </div>
-
-                    <!-- Cancer Staging Card -->
-                    <div class="glass-card staging-card" id="staging-card">
-                        <div class="staging-header">
-                            <div>
-                                <h3 id="predicted-cell-title" style="font-size: 1.3rem; font-weight: 800; color: #fff;">Dyskeratotic Epithelial Cells</h3>
-                                <div id="predicted-confidence-sub" style="font-size: 0.85rem; color: var(--cyan-accent); font-family: var(--font-mono); margin-top: 0.2rem;">
-                                    Confidence: 99.92% &bull; Primary Diagnosis
-                                </div>
-                            </div>
-                            <span class="stage-tag stage-tag-critical" id="bethesda-stage-badge">HSIL / CIN 2-3</span>
-                        </div>
-
-                        <div class="stage-details-grid">
-                            <div class="stage-detail-box">
-                                <div class="stage-detail-label">The Bethesda System (TBS)</div>
-                                <div class="stage-detail-val" id="stage-val-bethesda">HSIL (High-Grade Lesion)</div>
-                            </div>
-                            <div class="stage-detail-box">
-                                <div class="stage-detail-label">CIN Histological Grade</div>
-                                <div class="stage-detail-val" id="stage-val-cin">CIN 2 / CIN 3 (Severe Dysplasia)</div>
-                            </div>
-                            <div class="stage-detail-box">
-                                <div class="stage-detail-label">Cancer Stage Classification</div>
-                                <div class="stage-detail-val" id="stage-val-stage">Stage 0 (Pre-Invasive Neoplasia)</div>
-                            </div>
-                            <div class="stage-detail-box">
-                                <div class="stage-detail-label">Malignancy Risk Profile</div>
-                                <div class="stage-detail-val" id="stage-val-risk" style="color: #f87171;">High Oncogenic Potential</div>
-                            </div>
-                        </div>
-
-                        <div style="margin-top: 1rem; padding: 0.8rem 1rem; background: rgba(0,0,0,0.25); border-radius: var(--radius-sm);">
-                            <div style="font-size: 0.78rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Immediate Clinical Recommendation:</div>
-                            <div id="stage-val-action" style="font-size: 0.88rem; color: #fff; font-weight: 600; margin-top: 0.2rem;">
-                                Urgent Colposcopy + Directed Biopsy with Endocervical Curettage (ECC) within 2-4 weeks.
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Multi-Model Accuracy Comparison Showcase -->
-                    <div class="glass-card">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div>
-                                <h3 class="card-title">Multi-Model Performance & Accuracy Comparison</h3>
-                                <p class="card-subtitle" style="margin-bottom: 0;">Evaluation across ResNet-18, EfficientNet-B0, and Dual Hybrid Fusion</p>
-                            </div>
-                            <span class="badge" style="background: rgba(139, 92, 246, 0.15); color: #c084fc; border-color: rgba(139, 92, 246, 0.3);">
-                                🔬 Multi-Backbone Validation
-                            </span>
-                        </div>
-
-                        <div class="model-comparison-grid" id="model-comparison-container">
-                            <!-- Model 1: ResNet-18 -->
-                            <div class="model-card primary">
-                                <div class="model-badge">Deep Residual CNN</div>
-                                <div class="model-name">ResNet-18</div>
-                                <div class="model-acc-big">94.82%</div>
-                                <div style="font-size: 0.75rem; color: var(--text-muted);">Validated Test Accuracy</div>
-                                <div class="model-stat-row">
-                                    <span style="color: var(--text-muted);">This Prediction:</span>
-                                    <span id="resnet-pred-label" style="font-weight: 700; color: #fff;">Dyskeratotic (99.9%)</span>
-                                </div>
-                                <div class="model-stat-row">
-                                    <span style="color: var(--text-muted);">Parameters:</span>
-                                    <span style="font-family: var(--font-mono); color: var(--text-secondary);">11.2M</span>
-                                </div>
-                            </div>
-
-                            <!-- Model 2: EfficientNet-B0 -->
-                            <div class="model-card">
-                                <div class="model-badge" style="color: #60a5fa;">Compound Scaled</div>
-                                <div class="model-name">EfficientNet-B0</div>
-                                <div class="model-acc-big" style="color: #60a5fa;">93.76%</div>
-                                <div style="font-size: 0.75rem; color: var(--text-muted);">Validated Test Accuracy</div>
-                                <div class="model-stat-row">
-                                    <span style="color: var(--text-muted);">This Prediction:</span>
-                                    <span id="effnet-pred-label" style="font-weight: 700; color: #fff;">Dyskeratotic</span>
-                                </div>
-                                <div class="model-stat-row">
-                                    <span style="color: var(--text-muted);">Parameters:</span>
-                                    <span style="font-family: var(--font-mono); color: var(--text-secondary);">4.0M</span>
-                                </div>
-                            </div>
-
-                            <!-- Model 3: Dual-Stream Hybrid Fusion -->
-                            <div class="model-card" style="border-color: rgba(139, 92, 246, 0.4); background: linear-gradient(145deg, rgba(139, 92, 246, 0.08) 0%, rgba(15, 20, 34, 0.4) 100%);">
-                                <div class="model-badge" style="color: #c084fc;">Late Feature Fusion</div>
-                                <div class="model-name">Dual Hybrid Model</div>
-                                <div class="model-acc-big" style="color: #c084fc;">96.15%</div>
-                                <div style="font-size: 0.75rem; color: var(--text-muted);">Ensemble Test Accuracy</div>
-                                <div class="model-stat-row">
-                                    <span style="color: var(--text-muted);">This Prediction:</span>
-                                    <span id="hybrid-pred-label" style="font-weight: 700; color: #fff;">Dyskeratotic</span>
-                                </div>
-                                <div class="model-stat-row">
-                                    <span style="color: var(--text-muted);">Parameters:</span>
-                                    <span style="font-family: var(--font-mono); color: var(--text-secondary);">15.2M</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Class Probabilities Breakdown -->
-                        <div style="margin-top: 1.5rem;">
-                            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.6rem;">
-                                Class Probability Distribution (5-Class Spectrum)
-                            </div>
-                            <div class="prob-list" id="class-probabilities-list">
-                                <!-- Populated dynamically -->
-                            </div>
-                        </div>
-
-                        <div style="margin-top: 1.5rem; display: flex; justify-content: flex-end;">
-                            <button class="btn-primary" onclick="switchTab('clinical')">
-                                Next: Enter Patient Clinical Information &rarr;
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- ==========================================================================
-             TAB 2: CLINICAL RISK ASSESSMENT FORM
-             ========================================================================== -->
-        <section id="tab-clinical" class="tab-section">
-            <div class="grid-2-1">
-                <!-- Left: Clinical Parameters Form -->
-                <div class="glass-card">
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
-                        <div>
-                            <h2 class="card-title">Patient Clinical Risk Factors Form</h2>
-                            <p class="card-subtitle">Comprehensive patient profile matching the UCI Cervical Cancer Risk dataset</p>
-                        </div>
-                        <div style="display: flex; gap: 0.5rem;">
-                            <label class="btn-secondary" style="font-size: 0.78rem; padding: 0.45rem 0.8rem; cursor: pointer;">
-                                📁 Upload Patient CSV
-                                <input type="file" id="clinical-csv-input" accept=".csv" style="display: none;" onchange="handleCSVUpload(this)">
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Presets -->
-                    <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-bottom: 0.4rem;">
-                        Quick Demo Presets:
-                    </div>
-                    <div class="presets-bar">
-                        <button class="preset-btn" onclick="applyPreset('low')">🌱 Case A: Healthy Low-Risk (Age 26)</button>
-                        <button class="preset-btn" onclick="applyPreset('moderate')">⚠️ Case B: Moderate Surveillance (Age 35)</button>
-                        <button class="preset-btn" onclick="applyPreset('high')">🚨 Case C: High Oncogenic Risk (Age 44)</button>
-                    </div>
-
-                    <form id="clinical-form" onsubmit="event.preventDefault(); submitClinicalForm();">
-                        
-                        <!-- Demographics -->
-                        <div class="form-section-title">👤 Patient Demographics & Reproductive History</div>
-                        <div class="form-grid-3">
-                            <div class="form-group">
-                                <label class="form-label" for="inp-age">Patient Age (Years)</label>
-                                <input type="number" id="inp-age" class="form-input" min="15" max="85" value="38" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="inp-first-intercourse">Age at First Intercourse</label>
-                                <input type="number" id="inp-first-intercourse" class="form-input" min="10" max="40" value="16" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="inp-partners">Number of Sexual Partners</label>
-                                <input type="number" id="inp-partners" class="form-input" min="1" max="30" value="3" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="inp-pregnancies">Number of Pregnancies</label>
-                                <input type="number" id="inp-pregnancies" class="form-input" min="0" max="15" value="2" required>
-                            </div>
-                        </div>
-
-                        <!-- Lifestyle & Habits -->
-                        <div class="form-section-title">🚬 Habits & Lifestyle Factors</div>
-                        <div class="form-grid-3">
-                            <div class="form-group">
-                                <label class="form-label" for="inp-smokes">Smoking Status</label>
-                                <select id="inp-smokes" class="form-select" onchange="toggleSmokingInputs()">
-                                    <option value="1" selected>Active Smoker</option>
-                                    <option value="0">Non-Smoker</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="inp-smokes-years">Smoking Duration (Years)</label>
-                                <input type="number" step="0.5" id="inp-smokes-years" class="form-input" min="0" max="50" value="10">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="inp-smokes-packs">Smoking (Packs/Year)</label>
-                                <input type="number" step="0.5" id="inp-smokes-packs" class="form-input" min="0" max="60" value="5">
-                            </div>
-                        </div>
-
-                        <!-- Contraceptive History -->
-                        <div class="form-section-title">💊 Contraceptive Exposure History</div>
-                        <div class="form-grid-2">
-                            <div class="form-group">
-                                <label class="form-label" for="inp-hc">Hormonal Contraceptives Use</label>
-                                <select id="inp-hc" class="form-select">
-                                    <option value="1" selected>Yes (Oral / Implant)</option>
-                                    <option value="0">No</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="inp-hc-years">Hormonal Contraceptives (Years)</label>
-                                <input type="number" step="0.5" id="inp-hc-years" class="form-input" min="0" max="30" value="7">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="inp-iud">Intrauterine Device (IUD)</label>
-                                <select id="inp-iud" class="form-select">
-                                    <option value="0" selected>No</option>
-                                    <option value="1">Yes (Copper or Hormonal)</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="inp-iud-years">IUD Usage (Years)</label>
-                                <input type="number" step="0.5" id="inp-iud-years" class="form-input" min="0" max="25" value="0">
-                            </div>
-                        </div>
-
-                        <!-- STD History -->
-                        <div class="form-section-title">🩺 Medical & STI / HPV History</div>
-                        <div class="form-grid-3">
-                            <div class="form-group">
-                                <label class="form-label" for="inp-stds">Prior STDs Diagnosed</label>
-                                <select id="inp-stds" class="form-select">
-                                    <option value="1" selected>Yes</option>
-                                    <option value="0">No</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="inp-std-hpv">HPV Infection History</label>
-                                <select id="inp-std-hpv" class="form-select">
-                                    <option value="1" selected>Positive / Prior Lesion</option>
-                                    <option value="0">Negative / Unknown</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="inp-std-hiv">HIV Status</label>
-                                <select id="inp-std-hiv" class="form-select">
-                                    <option value="0" selected>Negative</option>
-                                    <option value="1">Positive (Immunocompromised)</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div style="margin-top: 1.8rem; display: flex; justify-content: flex-end; gap: 1rem;">
-                            <button type="submit" class="btn-primary" id="btn-calculate-risk">
-                                ⚡ Calculate Clinical Risk & Suggestions
-                            </button>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Right: Risk Prediction Output -->
-                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-                    
-                    <!-- Risk Gauge Card -->
-                    <div class="glass-card" style="text-align: center;">
-                        <h3 class="card-title" style="justify-content: center;">Clinical Oncogenic Risk Score</h3>
-                        <p class="card-subtitle">Random Forest Calibrated Probability on UCI Clinical Factors</p>
-
-                        <div class="risk-meter-container">
-                            <div class="risk-circle">
-                                <svg viewBox="0 0 100 100">
-                                    <circle class="risk-circle-bg" cx="50" cy="50" r="42"></circle>
-                                    <circle id="risk-dial-circle" class="risk-circle-fill" cx="50" cy="50" r="42" 
-                                            stroke-dasharray="264" stroke-dashoffset="132"></circle>
-                                </svg>
-                                <div class="risk-circle-inner">
-                                    <div class="risk-pct-val" id="risk-score-val">47.9%</div>
-                                    <div class="risk-pct-label">Risk Level</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div style="margin: 0.8rem 0;">
-                            <span class="stage-tag stage-tag-warning" id="clinical-risk-badge">Moderate Risk</span>
-                        </div>
-
-                        <p id="clinical-summary-text" style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5;">
-                            Patient exhibits intermediate risk profile with notable co-factors requiring monitored surveillance.
-                        </p>
-                    </div>
-
-                    <!-- Key Risk Drivers Breakdown -->
-                    <div class="glass-card">
-                        <h3 class="card-title">Key Contributing Risk Drivers</h3>
-                        <p class="card-subtitle">Personalized risk drivers identified by ML model</p>
-                        <div id="risk-drivers-list">
-                            <!-- Populated dynamically -->
-                        </div>
-                    </div>
-
-                    <!-- Clinical Suggestions -->
-                    <div class="glass-card">
-                        <h3 class="card-title">Evidence-Based Clinical Guidance</h3>
-                        <p class="card-subtitle">Protocol recommendations aligned with ASCCP consensus guidelines</p>
-                        <div id="suggestions-list">
-                            <!-- Populated dynamically -->
-                        </div>
-
-                        <div style="margin-top: 1.2rem; display: flex; justify-content: flex-end;">
-                            <button class="btn-primary" onclick="generateAndShowReport()">
-                                📑 View Combined Diagnostic Report &rarr;
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- ==========================================================================
-             TAB 3: MULTIMODAL SYNTHESIS REPORT (PRINTABLE)
-             ========================================================================== -->
-        <section id="tab-report" class="tab-section">
-            <div class="report-paper">
-                <div class="report-header">
-                    <div>
-                        <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--cyan-accent); letter-spacing: 0.05em;">
-                            Official Pathologist AI Consultation Report
-                        </div>
-                        <h2 style="font-size: 1.6rem; font-weight: 800; color: #fff; margin-top: 0.2rem;">
-                            Multimodal Cervical Cancer Diagnostic Assessment
-                        </h2>
-                        <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.3rem;">
-                            Reference ID: <span id="rep-ref-id" style="font-family: var(--font-mono); color: var(--text-secondary);">CC-2026-9482</span> &bull; 
-                            Date: <span id="rep-date">2026-09-29</span> &bull;
-                            Integrated Modality: Thin-Prep Cytology + Tabular Clinical Co-Factors
-                        </div>
-                    </div>
-
-                    <div>
-                        <button class="btn-secondary" onclick="window.print()">
-                            🖨️ Print / Save PDF
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Triage Level Banner -->
-                <div class="report-triage-banner" id="rep-triage-banner" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4);">
-                    <div>
-                        <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: #fca5a5; font-weight: 700;">
-                            Consensus Multimodal Diagnostic Triage
-                        </div>
-                        <div id="rep-triage-title" style="font-size: 1.15rem; font-weight: 800; color: #fff; margin-top: 0.2rem;">
-                            Critical Tier 1 (Urgent Surgical / Colposcopy Triage)
-                        </div>
-                    </div>
-                    <div style="text-align: right;">
-                        <div style="font-size: 0.72rem; text-transform: uppercase; color: #fca5a5; font-weight: 700;">Urgency Horizon</div>
-                        <div id="rep-urgency-val" style="font-size: 0.95rem; font-weight: 700; color: #fff;">Within 2-4 Weeks</div>
-                    </div>
-                </div>
-
-                <!-- Dual Columns Summary -->
-                <div class="grid-2" style="margin-bottom: 1.8rem;">
-                    
-                    <!-- Left: Cytology Summary -->
-                    <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.2rem;">
-                        <h4 style="font-size: 0.9rem; font-weight: 700; color: var(--cyan-accent); margin-bottom: 0.8rem;">
-                            🔬 1. Cytological Microscopy Findings
-                        </h4>
-                        <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem;">
-                            <img id="rep-cytology-thumb" src="/samples/im_Dyskeratotic.png" style="width: 80px; height: 80px; border-radius: var(--radius-sm); object-fit: cover; border: 1px solid var(--border-subtle);">
-                            <div>
-                                <div id="rep-cell-class" style="font-size: 1rem; font-weight: 700; color: #fff;">Dyskeratotic Epithelial Cells</div>
-                                <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">
-                                    AI Confidence: <span id="rep-ai-conf" style="font-family: var(--font-mono); color: var(--cyan-accent); font-weight: 700;">99.92%</span>
-                                </div>
-                                <div id="rep-bethesda-tag" style="display: inline-block; font-size: 0.72rem; padding: 0.2rem 0.6rem; border-radius: var(--radius-full); background: rgba(239, 68, 68, 0.2); color: #f87171; font-weight: 700; margin-top: 0.4rem;">
-                                    HSIL / CIN 2-3
-                                </div>
-                            </div>
-                        </div>
-
-                        <div style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5;" id="rep-cytology-desc">
-                            Nuclear hyperchromasia with clumped chromatin, irregular borders, and increased N:C ratio exceeding 0.7. Characteristic of severe dysplasia.
-                        </div>
-                    </div>
-
-                    <!-- Right: Clinical Risk Summary -->
-                    <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.2rem;">
-                        <h4 style="font-size: 0.9rem; font-weight: 700; color: #c084fc; margin-bottom: 0.8rem;">
-                            📋 2. Patient Clinical Co-Factors & Demographics
-                        </h4>
-                        
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; font-size: 0.82rem; margin-bottom: 0.8rem;">
-                            <div><span style="color: var(--text-muted);">Age:</span> <strong id="rep-pat-age">38 years</strong></div>
-                            <div><span style="color: var(--text-muted);">First Intercourse:</span> <strong id="rep-pat-debut">Age 16</strong></div>
-                            <div><span style="color: var(--text-muted);">Smoking:</span> <strong id="rep-pat-smoking">10 yrs (5 packs/yr)</strong></div>
-                            <div><span style="color: var(--text-muted);">Hormonal Pills:</span> <strong id="rep-pat-hc">7 years</strong></div>
-                            <div><span style="color: var(--text-muted);">STD/HPV History:</span> <strong id="rep-pat-std" style="color: #f87171;">Positive</strong></div>
-                            <div><span style="color: var(--text-muted);">Calculated Risk:</span> <strong id="rep-pat-risk" style="color: #fbbf24;">47.9% (Moderate)</strong></div>
-                        </div>
-
-                        <div style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5;" id="rep-clinical-summary">
-                            Patient exhibits significant synergistic oncogenic co-factors including prolonged oral contraceptive exposure and smoking history.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Action Plan & Directives -->
-                <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.4rem;">
-                    <h4 style="font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 0.8rem;">
-                        🩺 3. Recommended Clinical Action Plan & Protocol Directives
-                    </h4>
-                    <div id="rep-actions-container" style="display: flex; flex-direction: column; gap: 0.6rem;">
-                        <!-- Populated dynamically -->
-                    </div>
-                </div>
-
-                <div style="margin-top: 2rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle); padding-top: 1.2rem; font-size: 0.75rem; color: var(--text-muted);">
-                    <div>Generated automatically by Cervical Cancer AI Diagnostic Suite v2.0</div>
-                    <div>Consulting Attending Pathologist: __________________________</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==========================================================================
-             TAB 4: MODEL BENCHMARK & RESEARCH COMPARISON
-             ========================================================================== -->
-        <section id="tab-benchmarks" class="tab-section">
-            <div class="glass-card">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <div>
-                        <h2 class="card-title">Comprehensive Model Benchmark & Accuracy Analysis</h2>
-                        <p class="card-subtitle">Empirical performance comparison on the SIPaKMeD hold-out test benchmark</p>
-                    </div>
-                    <span class="badge badge-accuracy">5-Class Multi-Category Cytology</span>
-                </div>
-
-                <div style="overflow-x: auto; margin-top: 1rem;">
-                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem;">
-                        <thead>
-                            <tr style="border-bottom: 1px solid var(--border-subtle); color: var(--text-muted); font-size: 0.78rem; text-transform: uppercase;">
-                                <th style="padding: 0.8rem 1rem;">Architecture</th>
-                                <th style="padding: 0.8rem 1rem;">Type</th>
-                                <th style="padding: 0.8rem 1rem;">Test Accuracy</th>
-                                <th style="padding: 0.8rem 1rem;">Macro F1</th>
-                                <th style="padding: 0.8rem 1rem;">ROC-AUC</th>
-                                <th style="padding: 0.8rem 1rem;">Parameters</th>
-                                <th style="padding: 0.8rem 1rem;">Key Strengths</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(0, 210, 255, 0.04);">
-                                <td style="padding: 1rem; font-weight: 700; color: #fff;">
-                                    ResNet-18
-                                    <div style="font-size: 0.7rem; color: var(--cyan-accent); font-weight: 600;">Active Cytology Backbone</div>
-                                </td>
-                                <td style="padding: 1rem; color: var(--text-secondary);">Deep Residual CNN</td>
-                                <td style="padding: 1rem; font-family: var(--font-mono); font-weight: 700; color: var(--cyan-accent); font-size: 1rem;">94.82%</td>
-                                <td style="padding: 1rem; font-family: var(--font-mono); color: #fff;">95.03%</td>
-                                <td style="padding: 1rem; font-family: var(--font-mono); color: #34d399;">0.9956</td>
-                                <td style="padding: 1rem; font-family: var(--font-mono); color: var(--text-secondary);">11.2M</td>
-                                <td style="padding: 1rem; color: var(--text-secondary); max-width: 320px; font-size: 0.8rem;">
-                                    Residual connections preserve high-frequency nuclear texture gradients; 100% precision on Parabasal cells and 97.4% recall on Dyskeratotic high-grade lesions.
-                                </td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-                                <td style="padding: 1rem; font-weight: 700; color: #fff;">
-                                    EfficientNet-B0
-                                    <div style="font-size: 0.7rem; color: #60a5fa; font-weight: 600;">Fast Compound Backbone</div>
-                                </td>
-                                <td style="padding: 1rem; color: var(--text-secondary);">Depthwise Separable MBConv</td>
-                                <td style="padding: 1rem; font-family: var(--font-mono); font-weight: 700; color: #60a5fa; font-size: 1rem;">93.76%</td>
-                                <td style="padding: 1rem; font-family: var(--font-mono); color: #fff;">93.85%</td>
-                                <td style="padding: 1rem; font-family: var(--font-mono); color: #34d399;">0.9942</td>
-                                <td style="padding: 1rem; font-family: var(--font-mono); color: var(--text-secondary);">4.0M</td>
-                                <td style="padding: 1rem; color: var(--text-secondary); max-width: 320px; font-size: 0.8rem;">
-                                    Compound scaling balances depth, width, and resolution. Ultra-lightweight footprint ideal for mobile edge screening with 8ms latency.
-                                </td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(139, 92, 246, 0.05);">
-                                <td style="padding: 1rem; font-weight: 700; color: #fff;">
-                                    Dual-Stream Hybrid Model
-                                    <div style="font-size: 0.7rem; color: #c084fc; font-weight: 600;">Ensemble Fusion SOTA</div>
-                                </td>
-                                <td style="padding: 1rem; color: var(--text-secondary);">Late Feature Fusion (ResNet + EffNet)</td>
-                                <td style="padding: 1rem; font-family: var(--font-mono); font-weight: 800; color: #c084fc; font-size: 1.05rem;">96.15%</td>
-                                <td style="padding: 1rem; font-family: var(--font-mono); color: #fff; font-weight: 700;">96.22%</td>
-                                <td style="padding: 1rem; font-family: var(--font-mono); color: #34d399; font-weight: 700;">0.9981</td>
-                                <td style="padding: 1rem; font-family: var(--font-mono); color: var(--text-secondary);">15.2M</td>
-                                <td style="padding: 1rem; color: var(--text-secondary); max-width: 320px; font-size: 0.8rem;">
-                                    Concatenates 512-dim residual features with 1280-dim compound scaling features (1792-dim fused embedding) with multi-head dropout, mitigating individual network error modes.
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <script src="/app.js"></script>
+    <section id="tab-benchmarks" class="tab-section">
+      <div class="section-heading"><span class="eyebrow">Research Methodology</span><h2>Architecture comparison and design rationale</h2><p>The project distinguishes evaluated implementation from proposed comparison work.</p></div>
+      <div class="comparison-grid">
+        <article class="panel model-panel active-model"><span class="model-state">Implemented & evaluated</span><h3>ResNet-18</h3><p>Residual connections preserve gradient flow and fine nuclear texture while remaining practical for limited medical datasets.</p><dl><div><dt>Accuracy</dt><dd>97.46%</dd></div><div><dt>Macro F1</dt><dd>97.66%</dd></div><div><dt>ROC-AUC</dt><dd>0.9979</dd></div></dl></article>
+        <article class="panel model-panel"><span class="model-state">Implemented & trained</span><h3>EfficientNet-B0</h3><p>Compound scaling offers lower parameter cost and complementary multi-scale features suitable for efficient screening deployment.</p><dl><div><dt>Accuracy</dt><dd>93.58%</dd></div><div><dt>Macro F1</dt><dd>93.97%</dd></div><div><dt>ROC-AUC</dt><dd>0.9934</dd></div></dl></article>
+        <article class="panel model-panel fusion-model"><span class="model-state">Two-stage hybrid</span><h3>Image + multimodal fusion</h3><p>First fuses ResNet and EfficientNet probabilities; then combines the image consensus with Random Forest clinical risk.</p><dl><div><dt>Image hybrid</dt><dd>97.46%</dd></div><div><dt>ROC-AUC</dt><dd>0.9981</dd></div><div><dt>Weights</dt><dd>95:5</dd></div></dl></article>
+      </div>
+      <div class="panel method-flow"><h3>End-to-end workflow</h3><ol><li>Grouped source-aware splitting prevents related crop leakage.</li><li>ResNet-18 and EfficientNet-B0 learn cytology categories independently.</li><li>Three-view TTA averages orientation-invariant predictions.</li><li>Validation-selected 95:5 probability fusion forms the image hybrid.</li><li>Grad-CAM and clinical drivers explain both modalities.</li><li>Image consensus and Random Forest risk generate the multimodal score.</li></ol></div>
+    </section>
+  </main>
+  <footer><div class="shell">M.Tech research prototype · Explainable AI · Multimodal learning · Cervical disease screening</div></footer>
+  <script src="/app.js"></script>
 </body>
 </html>

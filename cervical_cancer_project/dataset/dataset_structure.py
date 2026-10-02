@@ -5,6 +5,7 @@ DATASET_PATHS = {
     "Cytolog Cervical Cancer": r"C:\Users\PAVAN H\Downloads\Cytolog Cervical Cancer",
     "SIPaKMeD": r"C:\Users\PAVAN H\Downloads\SIPaKMeD",
     
+    
 }
 
 IMAGE_EXTENSIONS = (

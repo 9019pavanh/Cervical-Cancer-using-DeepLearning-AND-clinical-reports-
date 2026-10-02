@@ -1,0 +1,35 @@
+.account-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.account-actions span {
+  width: 100%;
+  color: var(--muted);
+  font-size: .75rem;
+  text-align: right;
+}
+
+.logout {
+  padding: 11px 16px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--panel2);
+  color: var(--text);
+  font: inherit;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+@media (max-width: 820px) {
+  .account-actions {
+    justify-content: flex-start;
+  }
+
+  .account-actions span {
+    text-align: left;
+  }
+}

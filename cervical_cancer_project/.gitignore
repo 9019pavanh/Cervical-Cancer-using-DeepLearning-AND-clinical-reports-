@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.py[cod]
+*.log
+app/users.db
+.env
+models/research/*.pth
+models/research/*.joblib
+models/**/*.pth
+results/research/

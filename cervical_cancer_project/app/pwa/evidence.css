@@ -1,0 +1,41 @@
+.table-scroll {
+  margin-top: 18px;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  min-width: 680px;
+  border-collapse: collapse;
+  font-size: .8rem;
+}
+
+th,
+td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+
+th {
+  color: var(--muted);
+  font-size: .68rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.ready,
+.pending,
+.exploratory {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-size: .65rem;
+  font-weight: 800;
+}
+
+.ready { background: rgba(61,219,217,.10); color: var(--cyan); }
+.pending { background: rgba(255,204,114,.10); color: #ffcc72; }
+.exploratory { background: rgba(156,124,255,.12); color: #beaaff; }
+.install-guide ol { color: var(--muted); padding-left: 20px; }
+.install-guide li { margin: 8px 0; }

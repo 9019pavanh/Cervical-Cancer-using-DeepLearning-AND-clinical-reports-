@@ -1,0 +1,20 @@
+services:
+  database:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-cervical_ai}
+      POSTGRES_USER: ${POSTGRES_USER:-cervical_ai}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-cervical_ai_dev}
+    ports:
+      - "5432:5432"
+    volumes:
+      - cervical_ai_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-cervical_ai} -d ${POSTGRES_DB:-cervical_ai}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  cervical_ai_postgres:

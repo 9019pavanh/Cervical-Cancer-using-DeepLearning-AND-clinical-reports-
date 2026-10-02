@@ -5,6 +5,8 @@ DATASETS = {
     "Mendeley LBC": r"C:\Users\PAVAN H\Downloads\Mendeley LBC Cervical Cancer",
     "Cytolog Cervical Cancer": r"C:\Users\PAVAN H\Downloads\Cytolog Cervical Cancer",
     "SIPaKMeD": r"C:\Users\PAVAN H\Downloads\SIPaKMeD",
+    "CervicalCancer": r"C:\Users\PAVAN H\Downloads\CervicalCancer",
+    "Custom Cervical Cancer Cytology Image": r"C:\Users\PAVAN H\Downloads\Custom Cervical Cancer Cytology Image",
 }
 
 IMAGE_EXTENSIONS = (".jpg", ".jpeg", ".png", ".bmp", ".tif", ".tiff")

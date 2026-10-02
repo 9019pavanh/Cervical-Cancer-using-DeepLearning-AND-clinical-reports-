@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#030814">
+  <meta name="description" content="Secure account access for the CervixAI research workspace.">
+  <title>Research Access · CervixAI Lab</title>
+  <link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/theme.css">
+  <link rel="stylesheet" href="/assets/auth.css">
+</head>
+<body class="auth-page">
+  <header class="site-header">
+    <nav class="container site-nav" aria-label="Account navigation">
+      <a class="brand" href="/" data-route="">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="7.5" stroke="currentColor"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/><path d="M12 1.8v3M12 19.2v3M1.8 12h3M19.2 12h3" stroke="currentColor" stroke-linecap="round"/></svg></span>
+        <span class="brand-copy">CervixAI Lab<small>Explainable medical intelligence</small></span>
+      </a>
+      <a class="button button-ghost" href="/" data-route="">Back to overview</a>
+    </nav>
+  </header>
+
+  <main class="container auth-layout">
+    <section class="auth-story">
+      <span class="eyebrow">Secure research workspace</span>
+      <h1>Medical AI evidence in one focused environment.</h1>
+      <p>Access cytology classification, model comparison, Grad-CAM overlays, and the independent clinical-risk experiment.</p>
+
+      <div class="pipeline-card surface">
+        <div class="pipeline-head"><span>Framework status</span><strong>Research prototype</strong></div>
+        <div class="pipeline-step"><span class="step-number">01</span><div><strong>Image intelligence</strong><small>EfficientNet-B0 evaluated · ResNet50 ready to train</small></div><span class="status-dot ready"></span></div>
+        <div class="pipeline-step"><span class="step-number">02</span><div><strong>Explainability</strong><small>Model-specific Grad-CAM overlays</small></div><span class="status-dot ready"></span></div>
+        <div class="pipeline-step"><span class="step-number">03</span><div><strong>Multimodal fusion</strong><small>Guarded until patient linkage exists</small></div><span class="status-dot guarded"></span></div>
+      </div>
+
+      <div class="research-banner"><strong>Research use only.</strong><span>No result from this application should be interpreted as a medical diagnosis.</span></div>
+    </section>
+
+    <section class="auth-panel surface">
+      <div id="preview-notice" class="preview-notice" hidden>Interface preview · forms do not submit</div>
+      <div class="auth-tabs" role="tablist" aria-label="Account access">
+        <button id="login-tab" role="tab" aria-selected="true">Sign in</button>
+        <button id="register-tab" role="tab" aria-selected="false">Create account</button>
+      </div>
+
+      <form id="login-form" novalidate>
+        <header class="form-heading"><span class="eyebrow">Welcome back</span><h2>Sign in to your workspace</h2><p>Continue to the protected model dashboard.</p></header>
+        <label>Email address<input id="login-email" type="email" autocomplete="email" required maxlength="254" placeholder="researcher@example.com"></label>
+        <label>Password<input id="login-password" type="password" autocomplete="current-password" required maxlength="128" placeholder="Enter your password"></label>
+        <button class="button button-primary submit-button" type="submit">Sign in securely</button>
+      </form>
+
+      <form id="register-form" novalidate hidden>
+        <header class="form-heading"><span class="eyebrow">Research access</span><h2>Create your account</h2><p>Your account protects access to model inference.</p></header>
+        <label>Full name<input id="register-name" autocomplete="name" required minlength="2" maxlength="80" placeholder="Researcher name"></label>
+        <label>Email address<input id="register-email" type="email" autocomplete="email" required maxlength="254" placeholder="researcher@example.com"></label>
+        <label>Account role<select id="register-role"><option value="Researcher">Researcher</option><option value="Clinician">Clinician</option></select></label>
+        <label>Password<input id="register-password" type="password" autocomplete="new-password" required minlength="10" maxlength="128" placeholder="At least 10 characters"></label>
+        <label>Confirm password<input id="register-password-confirm" type="password" autocomplete="new-password" required minlength="10" maxlength="128" placeholder="Repeat your password"></label>
+        <small class="password-hint">Use 10–128 characters with at least one letter and one number.</small>
+        <button class="button button-primary submit-button" type="submit">Create research account</button>
+      </form>
+
+      <div id="auth-message" class="auth-message" role="status" aria-live="polite"></div>
+      <p class="privacy-copy">Credentials are stored in PostgreSQL. Passwords use salted PBKDF2-HMAC-SHA256 hashes; uploaded medical data is not persisted by the application.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="container footer-row"><span>CervixAI Lab · Secure research access</span><span>Not a medical device</span></div></footer>
+  <script src="/assets/auth.js"></script>
+</body>
+</html>

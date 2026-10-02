@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" role="img" aria-label="Synthetic Grad-CAM illustration">
+  <defs>
+    <radialGradient id="bg"><stop stop-color="#193d6c"/><stop offset="1" stop-color="#071323"/></radialGradient>
+    <radialGradient id="cell"><stop stop-color="#69dff2" stop-opacity=".55"/><stop offset=".56" stop-color="#2563a5" stop-opacity=".3"/><stop offset="1" stop-color="#102640" stop-opacity=".15"/></radialGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="22"/></filter>
+  </defs>
+  <rect width="720" height="420" rx="24" fill="url(#bg)"/>
+  <g opacity=".4" stroke="#8ab9f6" stroke-width="1"><path d="M0 70h720M0 140h720M0 210h720M0 280h720M0 350h720"/><path d="M90 0v420M180 0v420M270 0v420M360 0v420M450 0v420M540 0v420M630 0v420"/></g>
+  <g fill="url(#cell)" stroke="#69dff2" stroke-opacity=".35">
+    <ellipse cx="160" cy="145" rx="92" ry="66"/><ellipse cx="390" cy="112" rx="108" ry="74"/><ellipse cx="565" cy="240" rx="98" ry="72"/><ellipse cx="265" cy="312" rx="126" ry="70"/>
+  </g>
+  <g fill="#ff5d77" opacity=".55" filter="url(#blur)"><circle cx="422" cy="143" r="56"/><circle cx="534" cy="245" r="48"/><circle cx="255" cy="296" r="44"/></g>
+  <g fill="none" stroke="#ff8b9e" stroke-width="3" opacity=".72"><circle cx="422" cy="143" r="48"/><circle cx="534" cy="245" r="40"/><circle cx="255" cy="296" r="35"/></g>
+  <text x="28" y="390" fill="#b7cdec" font-family="Arial,sans-serif" font-size="14" letter-spacing="2">SYNTHETIC DEMO · ILLUSTRATIVE GRAD-CAM</text>
+</svg>

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#030814">
+  <meta name="description" content="Explainable cervical cytology classification and independent early-risk research platform.">
+  <title>CervixAI Lab · Explainable Medical AI</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/theme.css">
+  <link rel="stylesheet" href="/assets/landing.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="container site-nav" aria-label="Primary navigation">
+      <a class="brand" href="/" data-route="">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="7.5" stroke="currentColor"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/><path d="M12 1.8v3M12 19.2v3M1.8 12h3M19.2 12h3" stroke="currentColor" stroke-linecap="round"/></svg></span>
+        <span class="brand-copy">CervixAI Lab<small>Explainable medical intelligence</small></span>
+      </a>
+      <div class="nav-links">
+        <a href="#platform">Platform</a><a href="#architecture">Architecture</a><a href="#evidence">Evidence</a><a href="#safety">Safety</a>
+      </div>
+      <div class="nav-actions">
+        <a class="button button-ghost" href="/login" data-route="login">Sign in</a>
+        <a class="button button-primary" href="/register" data-route="register">Create account</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="landing-main">
+    <section class="container hero-section">
+      <div class="hero-copy">
+        <span class="eyebrow">M.Tech Medical AI Research Platform</span>
+        <h1>Understand cervical disease with <span>explainable AI.</span></h1>
+        <p>An evidence-first workspace for five-class cervical cytology classification, Grad-CAM interpretation, and independently evaluated early-risk modelling.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="/register" data-route="register">Enter research workspace</a>
+          <a class="button button-ghost" href="/preview/dashboard" data-preview-dashboard>Preview dashboard</a>
+        </div>
+        <ul class="proof-list"><li>Grouped leakage-safe split</li><li>Untouched test evaluation</li><li>Research-only outputs</li></ul>
+      </div>
+
+      <aside class="hero-console" aria-label="Research pipeline summary">
+        <div class="console-head">
+          <div class="console-title">Cytology intelligence engine<small>EfficientNet-B0 · Grad-CAM enabled</small></div>
+          <span class="console-status">Model ready</span>
+        </div>
+        <div class="console-visual" aria-hidden="true">
+          <span class="scan-line"></span><span class="cell-dot one"></span><span class="cell-dot two"></span><span class="cell-dot three"></span><span class="cell-core">AI</span>
+        </div>
+        <div class="console-metrics">
+          <div><span>Audited images</span><strong>5,015</strong></div>
+          <div><span>Cytology classes</span><strong>05</strong></div>
+          <div><span>Test accuracy</span><strong>93.58%</strong></div>
+        </div>
+        <p class="console-note">Measured on 748 untouched grouped test images. Accuracy above 97% is not claimed.</p>
+      </aside>
+    </section>
+
+    <section id="platform" class="section section-muted">
+      <div class="container">
+        <div class="section-heading"><span class="eyebrow">One research workspace</span><h2>From microscopy image to interpretable evidence.</h2><p>Every module is designed around reproducibility, leakage control, and honest presentation of uncertainty.</p></div>
+        <div class="feature-grid">
+          <article class="surface feature-card"><span class="feature-icon">01</span><h3>Cytology classification</h3><p>Compare ImageNet-pretrained ResNet50 and EfficientNet-B0 using consistent grouped data partitions.</p><small>Five-class disease classification</small></article>
+          <article class="surface feature-card"><span class="feature-icon">02</span><h3>Visual explainability</h3><p>Generate model-specific Grad-CAM overlays to inspect image regions associated with each prediction.</p><small>Heatmap overlay in every result</small></article>
+          <article class="surface feature-card"><span class="feature-icon">03</span><h3>Clinical risk research</h3><p>Evaluate a separate clinical MLP with calibration and Brier score while preventing outcome-proxy leakage.</p><small>Independent—not falsely fused</small></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="architecture" class="container section">
+      <div class="section-heading"><span class="eyebrow">Hybrid architecture</span><h2>Two branches, one scientifically guarded framework.</h2><p>The fusion architecture is implemented, but patient-level fusion stays disabled until a verified image-to-clinical linkage exists.</p></div>
+      <div class="architecture-grid">
+        <article class="surface branch-card"><header><span class="tag">Image branch</span><span class="tag tag-success">Operational</span></header><h3>ResNet50 / EfficientNet-B0</h3><p>Microscopy features extracted at 224 × 224 with ImageNet normalization and training-only augmentation.</p><ul class="branch-list"><li>Grouped source-aware splitting</li><li>Class-weighted focal loss</li><li>Grad-CAM explanations</li></ul></article>
+        <div class="fusion-lock"><span>Fusion<br>guarded</span></div>
+        <article class="surface branch-card"><header><span class="tag">Clinical branch</span><span class="tag tag-warning">Exploratory</span></header><h3>Clinical multilayer perceptron</h3><p>Training-only imputation, numerical scaling, categorical encoding, and binary risk probability.</p><ul class="branch-list"><li>Diagnostic proxies removed</li><li>Calibration and Brier score</li><li>Permutation importance</li></ul></article>
+      </div>
+    </section>
+
+    <section id="evidence" class="section section-muted">
+      <div class="container evidence-layout">
+        <div class="evidence-copy"><span class="eyebrow">Measured evidence</span><h2>Transparent results, not inflated claims.</h2><p>The current EfficientNet-B0 checkpoint is strong, but it does not cross 97% on the leakage-controlled test set. ResNet50 remains clearly marked as pending until genuine training is complete.</p><div class="evidence-points"><div><span>Test partition</span><strong>748 grouped images</strong></div><div><span>95% accuracy interval</span><strong>91.71–95.32%</strong></div><div><span>Macro ROC-AUC</span><strong>0.9934</strong></div></div></div>
+        <article class="surface metric-panel"><h3>Current model comparison</h3><div class="metric-row"><span>Model</span><strong>Accuracy</strong><strong>Macro F1</strong></div><div class="metric-row"><span>EfficientNet-B0 · evaluated</span><strong>93.58%</strong><strong>93.97%</strong></div><div class="metric-row"><span>ResNet50 · training required</span><strong>—</strong><strong>—</strong></div><div class="metric-row"><span>Clinical MLP · exploratory</span><strong>70.54%</strong><strong>20.83%</strong></div></article>
+      </div>
+    </section>
+
+    <section id="safety" class="container section">
+      <div class="surface cta-panel">
+        <div><span class="eyebrow">Research use only</span><h2>Explore the framework without presenting AI output as diagnosis.</h2></div>
+        <div class="cta-actions"><a class="button button-ghost" href="/preview/dashboard" data-preview-dashboard>View interface</a><a class="button button-primary" href="/register" data-route="register">Create account</a></div>
+      </div>
+      <div class="research-banner" style="margin-top:18px"><strong>Clinical safety notice.</strong><span>This system is an academic prototype and does not replace pathology review, screening, medical advice, or treatment decisions.</span></div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="container footer-row"><span>© 2026 CervixAI Lab · M.Tech research prototype</span><div class="footer-links"><a href="#architecture">Methods</a><a href="#evidence">Evidence</a><a href="/login" data-route="login">Research login</a></div></div></footer>
+  <script src="/assets/landing.js"></script>
+</body>
+</html>

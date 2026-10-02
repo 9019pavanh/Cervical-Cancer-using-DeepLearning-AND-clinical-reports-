@@ -1,0 +1,48 @@
+.model-output-panel {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+  margin-top: 18px;
+}
+
+.output-cards {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.output-card {
+  min-width: 150px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #081625;
+}
+
+.output-card strong,
+.output-card span {
+  display: block;
+}
+
+.output-card strong {
+  font-size: .78rem;
+}
+
+.output-card span {
+  color: var(--cyan);
+  font-size: .72rem;
+  margin-top: 3px;
+}
+
+@media (max-width: 900px) {
+  .model-output-panel {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .output-cards {
+    justify-content: flex-start;
+  }
+}

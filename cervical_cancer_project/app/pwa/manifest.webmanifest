@@ -1,0 +1,10 @@
+{
+  "name": "Explainable Cervical AI Research",
+  "short_name": "Cervical AI",
+  "description": "Research-only cervical cytology classification and early-risk experiments.",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#071827",
+  "theme_color": "#071827",
+  "icons": [{"src": "/assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}]
+}
