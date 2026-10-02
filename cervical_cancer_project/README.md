@@ -169,6 +169,10 @@ The dashboard includes five clearly labelled synthetic demonstrations: Ananya Ra
 
 The demo payload is served by `GET /api/demo/patients` and includes `is_demo_prediction: true`, the exact requested confidence fields, risk category, clinical factors, result summary, and a synthetic Grad-CAM path.
 
+## Visual demo
+
+Open the [visual demo walkthrough](docs/demo/README.md) for the short interface video and screenshots of the landing page, authentication, dashboard, synthetic results and mobile layout.
+
 ## Current measured artifacts
 
 The standardized EfficientNet-B0 checkpoint has been evaluated on 748 untouched grouped test images:
